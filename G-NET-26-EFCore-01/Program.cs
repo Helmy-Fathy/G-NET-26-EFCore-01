@@ -1,8 +1,10 @@
-﻿namespace G_NET_26_EFCore_01
+﻿using G_NET_26_EFCore_01.Models;
+
+namespace G_NET_26_EFCore_01
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
             /*  CASE STUDY: BOOKSTORE
                 You are hired as a junior developer at &quot;ReadMore Books&quot;, a
@@ -29,6 +31,43 @@
                 5. Create an appropriate DbContext class
                 6. Demonstrate that the database is created correctly
             */
+
+            using (AppDbContext dbContext = new AppDbContext()) 
+            {
+                var category = new Category
+                {
+                    Name = "Programming",
+                    Description = "Programming Books",
+                    IsActive = true
+                };
+
+                var author = new Author
+                {
+                    FirstName = "Ahmed",
+                    LastName = "Ali",
+                    Email = "ahmed@test.com",
+                    Bio = "Software Developer",
+                    DateOfBirth = new DateTime(1995, 5, 1)
+                };
+
+                var book = new Book
+                {
+                    Title = "C# Basics",
+                    ISBN = "123456",
+                    Price = 150,
+                    Pages = 300,
+                    YearPublished = 2023,
+                    IsInStock = true,
+                    Category = category,
+                    Authors = new List<Author> { author }
+                };
+
+                dbContext.Books.Add(book);
+                dbContext.SaveChanges();
+
+                Console.WriteLine("Database Created & Data Inserted Successfully");
+
+            }
         }
     }
 }
